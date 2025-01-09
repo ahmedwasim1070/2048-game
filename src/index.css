@@ -1,0 +1,112 @@
+/* Variables */
+:root{
+    --primary-color: #FFFFFF;
+    --secondary-color: #FAF9F6;
+    --main-color: #FAF3DD;
+    --dark-color: #1F1F1F;
+}
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-shrink: unset;
+}
+/* Header */
+.main-navbar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 20px 0;
+    width: 20%;
+    height: 100vh;
+    background-color: var(--secondary-color);
+    border: 1px solid white;
+    border-right-color: var(--dark-color);
+}
+.main-navbar #nav-top{
+    padding: 10px;
+}
+.main-navbar #nav-top img{
+    border: 1.5px solid black;
+    border-radius: 10px;
+}
+.main-navbar #nav-bottom{
+    display: flex;
+    flex-direction: column;
+    padding: 80px 0 80px 0;
+    gap: 40px;
+}
+.newgame-light{
+    background-color: var(--main-color);
+    border: 1.5px solid black;
+}
+#nav-bottom button{
+    font-size: 18px;
+    padding: 15px 25px 15px 25px;
+    border-radius: 20px;
+    outline: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+#nav-bottom .regular-btn{
+    border: 1.4px solid var(--dark-color);
+    background-color: transparent   ;
+}
+/* Body */
+main{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+#content{
+    padding: 0 100px 0 100px;
+    width: 90%;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.content-box{
+    padding: 8px 45px 15px 45px;
+    border-radius: 10px;
+}
+.content-box-label{
+    font-size: 12px;
+    font-weight: 700;
+}
+.content-box-text{
+    font-size: 25px;    
+    font-weight: 600;
+    margin-top: 2px;
+}
+#score{
+    border: 0.8px solid var(--dark-color);
+    background-color: var(--main-color);
+    color: var(--dark-color);
+
+}
+#best{
+    border: none;
+    background-color: var(--dark-color);
+    color: var(--primary-color);
+}
+section canvas{
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+}

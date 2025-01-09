@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="aurthor" content="ahmedwasim1070" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/index.css" />
+    <title>2048</title>
+  </head>
+  <body>
+    <nav class="main-navbar">
+      <div id="nav-top">
+        <img
+          width="160px"
+          height="70px"
+          src="public/2048-game-logo-light-mode.webp"
+          alt="2048 logo"
+        />
+      </div>
+      <div id="nav-bottom">
+        <button class="newgame-light">
+          <p>New Game</p>
+          <span>
+            <svg
+              width="25"
+              height="25"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 0C3.58171 0 0 3.58171 0 8C0 12.4182 3.58171 16 8 16C12.4183 16 16 12.4182 16 8C16 3.58171 12.4183 0 8 0ZM10.4378 8.54181C10.3617 8.61785 10.2731 8.68075 10.1971 8.75679L7.30907 11.6448C7.16325 11.7907 6.97211 11.8636 6.78096 11.8636C6.58981 11.8636 6.39877 11.7907 6.25285 11.6448C5.96112 11.3531 5.96112 10.88 6.25285 10.5884C7.67444 9.16659 7.68755 6.8484 6.26587 5.42672C5.97413 5.13483 5.97413 4.66192 6.26587 4.37029C6.5576 4.07856 7.03056 4.07872 7.32229 4.37013L10.1971 7.24479C10.2731 7.32078 10.3618 7.38349 10.4375 7.45968C10.5867 7.6088 10.6586 7.80523 10.6553 8.0008C10.6588 8.19627 10.587 8.39259 10.4378 8.54181Z"
+                fill="#582F0E"
+              />
+            </svg>
+          </span>
+        </button>
+        <button class="regular-btn">
+          <p>4x4</p>
+          <span>
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 8 6"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3.69298 5.22948L0.149658 0.885986H7.23631L3.69298 5.22948Z"
+                fill="#582F0E"
+              />
+            </svg>
+          </span>
+        </button>
+        <button class="regular-btn">
+          <p>Dark Mode</p>
+          <span>
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M18 2.75C17.5858 2.75 17.25 2.41421 17.25 2C17.25 1.58579 17.5858 1.25 18 1.25H22C22.3034 1.25 22.5768 1.43273 22.6929 1.71299C22.809 1.99324 22.7449 2.31583 22.5304 2.53033L19.8107 5.25H22C22.4142 5.25 22.75 5.58579 22.75 6C22.75 6.41421 22.4142 6.75 22 6.75H18C17.6967 6.75 17.4232 6.56727 17.3071 6.28701C17.191 6.00676 17.2552 5.68417 17.4697 5.46967L20.1894 2.75H18ZM13.5 8.75C13.0858 8.75 12.75 8.41421 12.75 8C12.75 7.58579 13.0858 7.25 13.5 7.25H16.5C16.8034 7.25 17.0768 7.43273 17.1929 7.71299C17.309 7.99324 17.2449 8.31583 17.0304 8.53033L15.3107 10.25H16.5C16.9142 10.25 17.25 10.5858 17.25 11C17.25 11.4142 16.9142 11.75 16.5 11.75H13.5C13.1967 11.75 12.9232 11.5673 12.8071 11.287C12.691 11.0068 12.7552 10.6842 12.9697 10.4697L14.6894 8.75H13.5Z"
+                  fill="#582F0E"
+                ></path>
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  fill="#582F0E"
+                ></path>
+              </g>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </nav>
+    <main>
+      <section id="content">
+        <div class="content-box" id="score">
+          <h3 class="content-box-label">SCORE</h3>
+          <p class="content-box-text">0000</p>
+        </div>
+        <div class="content-box" id="best">
+          <h3 class="content-box-label">BEST</h3>
+          <p class="content-box-text">0000</p>
+        </div>
+      </section>
+      <section id="canvas-content">
+        <canvas width="416px" height="416px"></canvas>
+      </section>
+    </main>
+    <script src="./src/index.js"></script>
+  </body>
+</html>
