@@ -1,29 +1,41 @@
 const canvas = document.querySelector("canvas");
-
 let ctx = canvas.getContext("2d");
 
-function renderRoundedBox(x, y, width, height, radius) {
-  // Ensure the radius does not exceed half the width or height
+function renderRoundedBox(x, y, width, height, radius, text) {
   radius = Math.min(radius, width / 2, height / 2);
 
   ctx.beginPath();
-  ctx.moveTo(x + radius, y); // Start at the top-left corner with a radius offset
-  ctx.lineTo(x + width - radius, y); // Draw top edge
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius); // Top-right corner
-  ctx.lineTo(x + width, y + height - radius); // Right edge
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); // Bottom-right corner
-  ctx.lineTo(x + radius, y + height); // Bottom edge
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius); // Bottom-left corner
-  ctx.lineTo(x, y + radius); // Left edge
-  ctx.quadraticCurveTo(x, y, x + radius, y); // Top-left corner
+  ctx.moveTo(x + radius, y); 
+  ctx.lineTo(x + width - radius, y); 
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius); 
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); 
+  ctx.lineTo(x + radius, y + height); 
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius); 
+  ctx.lineTo(x, y + radius); 
+  ctx.quadraticCurveTo(x, y, x + radius, y); 
   ctx.closePath();
   ctx.fill();
+
+  if (text != null) {
+    ctx.font = "30px Arial"; 
+    ctx.fillStyle = "black"; 
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    let textX = x + width / 2;
+    let textY = y + width / 2;
+    ctx.fillText(text, textX, textY);
+  }
 }
 
-function spawnBoxses(x, y) {
+function spawnBox(boxValue){
+
+}
+
+function spawnPlatform(x, y) {
   while (y <= canvas.height) {
     ctx.fillStyle = "#1e1e1e";
-    renderRoundedBox(x, y, 100, 100, 10);
+    renderRoundedBox(x, y, 100, 100, 10,null);
     if (x <= canvas.width - 104) {
       x += 104;
     } else {
@@ -32,28 +44,32 @@ function spawnBoxses(x, y) {
   }
 }
 
-function generateRandomVal(max) {
-  return Math.floor(Math.random() * max);
+function checkDuplicates(val) {
+  let temp = 0;
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (temp == val) {
+        return [i, j];
+      }
+      temp += 1;
+    }
+  }
+  return null;
 }
 
-function getPosBox(boxVal) {
-  let x = 0;
-  let y = 0;
-  let temp = 0;
-  while (temp < boxVal) {
-    if (x < canvas.width - 104) {
-      x += 104;
-    } else {
-      (y += 104), (x = 0);
-    }
-    temp += 1;
+function generateRandomValue(max) {
+  let result = Math.floor(Math.random() * max);
+  let idx = checkDuplicates(result);
+  if (matrix[idx[0]][idx[1]] != 0) {
+    return generateRandomVal(max);
+  } else {
+    matrix[idx[0]][idx[1]] = 1;
   }
-  ctx.fillStyle = "#ffff";
-  console.log(x, y);
-  renderRoundedBox(x, y, 100, 100, 10);
+  return result;
 }
-spawnBoxses(0, 0);
-getPosBox(generateRandomVal(16));
+
+spawnPlatform(0,0);
+
 window.addEventListener("keydown", (event) => {
   if (
     event.key === "ArrowUp" ||
@@ -61,6 +77,6 @@ window.addEventListener("keydown", (event) => {
     event.key === "ArrowLeft" ||
     event.key === "ArrowRight"
   ) {
-    getPosBox(generateRandomVal(16));
+    spawnBox(generateRandomValue(16));
   }
 });
