@@ -1,25 +1,26 @@
 const canvas = document.querySelector("canvas");
 let ctx = canvas.getContext("2d");
+let matrix = [[{ x: 0, y: 0 }]];
 
 function renderRoundedBox(x, y, width, height, radius, text) {
   radius = Math.min(radius, width / 2, height / 2);
 
   ctx.beginPath();
-  ctx.moveTo(x + radius, y); 
-  ctx.lineTo(x + width - radius, y); 
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-  ctx.lineTo(x + width, y + height - radius); 
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); 
-  ctx.lineTo(x + radius, y + height); 
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius); 
-  ctx.lineTo(x, y + radius); 
-  ctx.quadraticCurveTo(x, y, x + radius, y); 
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
   ctx.fill();
 
   if (text != null) {
-    ctx.font = "30px Arial"; 
-    ctx.fillStyle = "black"; 
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     let textX = x + width / 2;
@@ -28,14 +29,27 @@ function renderRoundedBox(x, y, width, height, radius, text) {
   }
 }
 
-function spawnBox(boxValue){
-
+function spawnBox(boxValue) {
+  let x = 0,
+    y = 0,
+    temp = 0;
+  while (temp == boxValue) {
+    if (x >= canvas.width - 104) {
+      (x = 0), (y += 104);
+    }
+    temp++;
+    x += 104;
+  }
+  for (let i = 0; i < row; i++) {
+    box[i] = [];
+    for (let j = 0; j < coloum; j++) {}
+  }
 }
 
 function spawnPlatform(x, y) {
   while (y <= canvas.height) {
     ctx.fillStyle = "#1e1e1e";
-    renderRoundedBox(x, y, 100, 100, 10,null);
+    renderRoundedBox(x, y, 100, 100, 10, null);
     if (x <= canvas.width - 104) {
       x += 104;
     } else {
@@ -68,8 +82,7 @@ function generateRandomValue(max) {
   return result;
 }
 
-spawnPlatform(0,0);
-
+spawnPlatform(0, 0);
 window.addEventListener("keydown", (event) => {
   if (
     event.key === "ArrowUp" ||
