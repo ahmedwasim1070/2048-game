@@ -1,6 +1,8 @@
 const canvas = document.querySelector("canvas");
 let ctx = canvas.getContext("2d");
-let matrix = [[{ x: 0, y: 0 }]];
+let rows = 4,
+  coloums = 4;
+let boxses = [];
 
 function renderRoundedBox(x, y, width, height, radius, text) {
   radius = Math.min(radius, width / 2, height / 2);
@@ -29,23 +31,6 @@ function renderRoundedBox(x, y, width, height, radius, text) {
   }
 }
 
-function spawnBox(boxValue) {
-  let x = 0,
-    y = 0,
-    temp = 0;
-  while (temp == boxValue) {
-    if (x >= canvas.width - 104) {
-      (x = 0), (y += 104);
-    }
-    temp++;
-    x += 104;
-  }
-  for (let i = 0; i < row; i++) {
-    box[i] = [];
-    for (let j = 0; j < coloum; j++) {}
-  }
-}
-
 function spawnPlatform(x, y) {
   while (y <= canvas.height) {
     ctx.fillStyle = "#1e1e1e";
@@ -58,31 +43,130 @@ function spawnPlatform(x, y) {
   }
 }
 
-function checkDuplicates(val) {
-  let temp = 0;
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      if (temp == val) {
-        return [i, j];
+function createBoxses() {
+  let x = 0,
+    y = 0;
+  for (let i = 0; i < rows; i++) {
+    boxses[i] = [];
+    for (let j = 0; j < coloums; j++) {
+      boxses[i][j] = { value: 0, x: x, y: y, boxColor: "white" };
+      if (x < canvas.width - 104) {
+        x += 104;
+      } else {
+        (x = 0), (y += 104);
       }
-      temp += 1;
     }
   }
-  return null;
+}
+
+function drawBoxses() {
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < coloums; j++) {
+      if (boxses[i][j].value != 0) {
+        ctx.fillStyle = boxses[i][j].boxColor;
+        renderRoundedBox(
+          boxses[i][j].x,
+          boxses[i][j].y,
+          100,
+          100,
+          10,
+          boxses[i][j].value
+        );
+      }
+    }
+  }
+}
+
+function moveBoxses(direction) {
+  let moved = false;
+  if (direction === "ArrowUp") {
+    for (let j = 0; j < coloums; j++) {
+      for (let i = 1; i < rows; i++) {
+        if (boxses[i][j].value) {
+          let k = i;
+          while (k > 0 && boxses[k - 1][j].value === 0) {
+            boxses[k - 1][j].value = boxses[k][j].value;
+            boxses[k][j].value = 0;
+            k--;
+            moved = true;
+          }
+        }
+      }
+    }
+  }
+
+  if (direction === "ArrowDown") {
+    for (let j = 0; j < coloums; j++) {
+      for (let i = rows - 2; i >= 0; i--) {
+        if (boxses[i][j].value) {
+          let k = i;
+          while (k < rows - 1 && boxses[k + 1][j].value === 0) {
+            boxses[k + 1][j].value = boxses[k][j].value;
+            boxses[k][j].value = 0;
+            k++;
+            moved = true;
+          }
+        }
+      }
+    }
+  }
+
+  if (direction === "ArrowLeft") {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 1; j < coloums; j++) {
+        if (boxses[i][j].value) {
+          let k = j;
+          while (k > 0 && boxses[i][k - 1].value === 0) {
+            boxses[i][k - 1].value = boxses[i][k].value;
+            boxses[i][k].value = 0;
+            k--;
+            moved = true;
+          }
+        }
+      }
+    }
+  }
+
+  if (direction === "ArrowRight") {
+    for (let i = 0; i < rows; i++) {
+      for (let j = coloums - 2; j >= 0; j--) {
+        if (boxses[i][j].value) {
+          let k = j;
+          while (k < coloums - 1 && boxses[i][k + 1].value === 0) {
+            boxses[i][k + 1].value = boxses[i][k].value;
+            boxses[i][k].value = 0;
+            k++;
+            moved = true;
+          }
+        }
+      }
+    }
+  }
+
+  if (moved) {
+    generateRandomValue(16);
+  }
+  drawBoxses()
 }
 
 function generateRandomValue(max) {
   let result = Math.floor(Math.random() * max);
-  let idx = checkDuplicates(result);
-  if (matrix[idx[0]][idx[1]] != 0) {
-    return generateRandomVal(max);
-  } else {
-    matrix[idx[0]][idx[1]] = 1;
+  let temp = 0;
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < coloums; j++) {
+      temp++;
+      if (temp === result) {
+        let ans = boxses[i][j].value;
+        if (ans != 0) {
+          return generateRandomValue(max);
+        }
+        boxses[i][j].value = result % 2 == 0 ? 2 : 4;
+      }
+    }
   }
-  return result;
+  drawBoxses();
 }
 
-spawnPlatform(0, 0);
 window.addEventListener("keydown", (event) => {
   if (
     event.key === "ArrowUp" ||
@@ -90,6 +174,10 @@ window.addEventListener("keydown", (event) => {
     event.key === "ArrowLeft" ||
     event.key === "ArrowRight"
   ) {
-    spawnBox(generateRandomValue(16));
+    moveBoxses(event.key);
   }
 });
+
+spawnPlatform(0, 0);
+createBoxses();
+generateRandomValue(16);
